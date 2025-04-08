@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cool Looking HTML Page</title>
+  <!-- Importing a modern Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      background: linear-gradient(to bottom right, #2b5876, #4e4376);
+      color: #fff;
+    }
+    header {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 3rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.2rem;
+      position: relative;
+    }
+    /* Underline effect on hover */
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #fff;
+      left: 50%;
+      bottom: -5px;
+      transition: 0.3s;
+    }
+    nav ul li a:hover::after {
+      width: 100%;
+      left: 0;
+    }
+    main {
+      padding: 40px;
+      text-align: center;
+    }
+    .hero {
+      margin: 50px 0;
+    }
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      animation: fadeInUp 2s;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      animation: fadeInUp 2.5s;
+    }
+    .btn {
+      background: #ff4081;
+      border: none;
+      padding: 15px 30px;
+      color: #fff;
+      font-size: 1rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s;
+      border-radius: 30px;
+    }
+    .btn:hover {
+      background: #e73370;
+    }
+    footer {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    footer p {
+      font-size: 0.9rem;
+    }
+    /* Keyframes for fade-in animation */
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0);
+      }
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+      }
+      nav ul li {
+        margin: 10px 0;
+      }
+      header h1 {
+        font-size: 2.5rem;
+      }
+      .hero h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to My Cool Page</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="home">
+      <h2>Discover Your Creativity</h2>
+      <p>Explore the world of innovative designs and experience the blend of art and technology.</p>
+      <button class="btn">Get Started</button>
+    </section>
+    <section id="about">
+      <h2>About Us</h2>
+      <p>We are passionate about design, technology, and creating amazing user experiences that inspire.</p>
+    </section>
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Feel free to reach out to us for any creative projects or design opportunities!</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Your Name. All rights reserved.</p>
+  </footer>
+</body>
+</html>
