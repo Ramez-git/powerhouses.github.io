@@ -1,0 +1,774 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Learning to Plot on Python</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1c4f9012-8323-80ef-a51f-caf535220809" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 50%"/><h1 class="page-title">Learning to Plot on Python</h1><p class="page-description"></p></header><div class="page-body"><p id="1cbf9012-8323-8088-981a-c5da0772d46c" class="">Welcome to the wonderful world of <mark class="highlight-yellow">Python</mark>! Python is a powerful coding language that opens up tons of new computational possibilities for you. This set of instructions will coach you through the steps of installing python onto your computer and learning how to plot your own data. As an example, we will show you how to input your own position vs time data and see how Python can graph this data as well as calculating and graphing velocity vs time and acceleration vs time for you. These steps will include the following:</p><ol type="1" id="1cbf9012-8323-8001-bd7c-dbd311ac1788" class="numbered-list" start="1"><li>Determining your operating system</li></ol><ol type="1" id="1cbf9012-8323-806d-bd6e-f2bc463f0d39" class="numbered-list" start="2"><li>Downloading Python</li></ol><ol type="1" id="1cbf9012-8323-8092-9670-d41696220a20" class="numbered-list" start="3"><li>Installing an <mark class="highlight-yellow">integrated development system</mark></li></ol><ol type="1" id="1cbf9012-8323-8034-acbb-cb1b37f28646" class="numbered-list" start="4"><li>Installing necessary <mark class="highlight-yellow">packages</mark> </li></ol><ol type="1" id="1cbf9012-8323-80d2-9091-eb05db28afcb" class="numbered-list" start="5"><li>Creating a <mark class="highlight-yellow">csv</mark> file with your own position vs time data</li></ol><ol type="1" id="1cbf9012-8323-8014-8a9a-edefd5cf1305" class="numbered-list" start="6"><li>Coding the instructions into your computer</li></ol><p id="1cbf9012-8323-8063-9650-d252818e184e" class="">Don’t worry if you don’t know what some of those <mark class="highlight-yellow">yellow terms</mark> are! As you carefully go through step by step, we’ll explain them to you. Make sure to go slow and be thorough, a small error can completely ruin the code. And get excited! You’re about to learn how to code and graphically represent incredibly important information in physics! Good luck!</p><hr id="1cbf9012-8323-80c0-a190-f2dc52bc895c"/><h2 id="1c8f9012-8323-8092-b3bb-d741a24614f6" class="">1) Determine your Operating System</h2><div id="1c8f9012-8323-80aa-adb3-f3fe9673c510" class="column-list"><div id="1c8f9012-8323-801a-a51f-ce1508399cd9" style="width:68.75%" class="column"><p id="1c8f9012-8323-808a-834f-d44daa7eecd0" class="">An <mark class="highlight-yellow">operating system</mark> (OS) is the software that will manage the computer hardware and provides a platform for the computer applications to run on. Basically, it is the bridge between computer and user. You must understand the type of operating system your computer will use, for this will determine the steps you will take to download Python. You can determine your OS based upon the <em>brand of computer</em> you will be using. The instructions explained hereafter will be split among <em>macOS</em> and <em>Windows</em>. </p></div><div id="1c8f9012-8323-80e7-8426-f53d171bbfa0" style="width:31.250000000000007%" class="column"><table id="1c8f9012-8323-806c-af36-dcf6216c5ec3" class="simple-table"><tbody><tr id="0bc111cc-8a28-48ac-86e2-1a65f22059c7"><td id="?{Ab" class="" style="width:100.5859375px"><strong>Brand of Computer</strong></td><td id="Ig{P" class="" style="width:89.4375px"><strong>Operating System</strong></td></tr><tr id="a6126a7b-9d1c-43c4-bdfa-6c437e1f32a8"><td id="?{Ab" class="" style="width:100.5859375px"><em>Apple</em> </td><td id="Ig{P" class="" style="width:89.4375px">macOS</td></tr><tr id="b2b34b0e-7d09-4a93-a40b-ac4387abd53d"><td id="?{Ab" class="" style="width:100.5859375px"><em>HP<br/>Dell<br/>Lenovo<br/>Acer<br/>Microsoft<br/></em></td><td id="Ig{P" class="" style="width:89.4375px">Windows</td></tr></tbody></table></div></div><hr id="1cbf9012-8323-80db-8f70-e779e84afbd3"/><h2 id="1c8f9012-8323-809b-bd33-c97bb0866f06" class="">2) Downloading Python onto your Computer</h2><p id="1c8f9012-8323-80c2-a436-cd448188952a" class="">Now that you have determined your operating system, it is time to download Python onto your computer to store it into your systems memory. Python is made up of a <mark class="highlight-yellow">library</mark> and <mark class="highlight-yellow">interpreter</mark> that both allow your computer to access necessary coding tools. The following steps include going to the Python website and downloading the appropriate libraries (also known as <mark class="highlight-yellow">packages</mark>) and interpreter. The steps will vary slightly depending on your OS, therefore you may skip to the heading for your OS and follow the instructions below. After finishing, you can move onto section 3. </p><h3 id="1c8f9012-8323-80f7-a5bb-ce87df4ebe77" class="">Steps for <em>macOS </em></h3><p id="1c8f9012-8323-80fe-96f1-d5a8118b5732" class="">2.1a) Open a browser (Safari, Google Chrome, etc.) and go to the Python website (python.org) or click on this <a href="https://www.python.org/">link.</a></p><p id="1c8f9012-8323-8085-9c29-f2f8d7ecf859" class="">2.2a) Hover over the “downloads” button and click “macOS”.</p><p id="1c8f9012-8323-80db-b539-eaed10564a40" class="">2.3a) Under the heading “Stable Releases”, the first bullet point has the latest stable version of Python. Beneath it, click the download link that says “macOS 64-bit universal2 installer”. This will open up an installation window on your computer which is just a graphical interface that appears whenever you install software onto your computer.</p><p id="1c8f9012-8323-808b-9120-c5f24f7ba3cf" class="">2.4a) Agree to the license of the software and hit the “install” button. This will open an executable directory which is a folder that contains files the OS can run as a program on the computer. </p><h3 id="1c8f9012-8323-8025-ba1f-e5a054a7be41" class="">Steps for <em>Windows</em></h3><p id="1c8f9012-8323-80e4-8966-cdc64118f3df" class="">2.1b) Open a browser (Firefox, Google Chrome, etc.) and go to the Python website (python.org) or click on this <a href="https://www.python.org/">link</a>.</p><p id="1c9f9012-8323-801a-bca5-d98237df7807" class="">2.2b) Hover over the “downloads” button and click “Windows”.</p><p id="1c9f9012-8323-8082-9b4b-d617098951ee" class="">2.3b) Under the heading “Stable Releases”, the first bullet point has the latest stable version of Python. Beneath it, click the download link that says “Download Windows installer (64-bit)”. This will open up an installation window on your computer which is just a graphical interface that appears whenever you install software onto your computer.</p><p id="1c9f9012-8323-80f5-8046-caaab54392f2" class="">2.4b) On the bottom, select the checkbox labeled “Add python.exe to PATH”.</p><p id="1c9f9012-8323-80e8-a877-f9099bb11b4a" class="">2.5b) Click “install now”.</p><p id="1c9f9012-8323-8033-8547-eb159202601c" class="">2.6b) Once the setup has been successful, click on “close”.</p><hr id="1cbf9012-8323-806c-9095-d9543352dbc4"/><h2 id="1c9f9012-8323-80ef-9e35-c1b62c350418" class="">3) Installing your Integrated Development Environment</h2><p id="1c9f9012-8323-80cf-8d6d-ec69bc6cb8b5" class="">With python now installed, the next step is to install an <mark class="highlight-yellow"><mark class="highlight-default_background">Integrated Development Environment</mark></mark> or IDE. Although not necessary for the code to work, an IDE offers a useful interface for a programmer to create code and visualize how it will work before actually running the code. It will also help you learn new tools so you can continue your use of Python in other applications.</p><h3 id="1c9f9012-8323-805b-8c0b-cd54eff21926" class="">Steps for <em>macOS</em></h3><p id="1c9f9012-8323-805e-a91c-d1b189354e9a" class="">3.1a) Open a browser and search “Microsoft Visual Studio Code” and go to their website (code.visualstudio.com) or click on this <a href="https://code.visualstudio.com/">link.</a></p><p id="1c9f9012-8323-8016-83b9-fc923a118b96" class="">3.2a) Click the button to download the latest version. It will then be held on your browser. Open the downloads file on your browser and download the file onto your computer. </p><p id="1c9f9012-8323-8016-b2e2-f770b777a0e0" class="">3.3a) This will open up some steps for you to follow. Pass through the introductory steps. </p><p id="1c9f9012-8323-805d-a470-f2a8e00a81a2" class="">3.4a) Click on the button “new file”.</p><p id="1c9f9012-8323-80fb-b0d2-c653ef5d2177" class="">3.5a) Type in the name of your program and end it with .py (for example: MyFirstCode.py)</p><p id="1c9f9012-8323-802d-84e5-c2f04867d800" class="">3.6a) When prompted, click the button “install python” that will appear in the bottom right corner. </p><h3 id="1c9f9012-8323-8072-8812-c4244b1a82b0" class="">Steps for <em>Windows</em></h3><p id="1c9f9012-8323-8099-ac59-d92775577c1b" class="">3.1b) Open a browser and search “Microsoft Visual Studio Code” and go to their website (code.visualstudio.com) or click on this <a href="https://code.visualstudio.com/">link.</a></p><p id="1c9f9012-8323-803d-885a-c6c68119e6b4" class="">3.2b) Click the button “Download for Windows. Open the downloads folder and double click on the downloaded file to open it. </p><p id="1c9f9012-8323-8077-9ad0-e9ca2f41b4dd" class="">3.3b) This will open up the installation. You should accept the user agreement and then click on next.</p><p id="1c9f9012-8323-809d-a207-f5fa5fdb75e4" class="">3.4b) Chose the directory that you want to install Microsoft Visual Studio Code onto or just click next for the default installation directory.</p><p id="1c9f9012-8323-80b4-ba31-d07fb8892690" class="">3.5b) It will then ask your permission to create shortcuts on your start menu to be able to run the program from, so click next to accept. </p><p id="1c9f9012-8323-802c-ba75-da048042da86" class="">3.6b) It will then ask for any additional tasks to execute in the installation, so you should check the first checkbox which says “Create a desktop shortcut”, then click next.</p><p id="1c9f9012-8323-80f1-b9fd-db4b5df20fdf" class="">3.7b) Click on install to install the program.</p><p id="1c9f9012-8323-807b-aae8-cd3e7443f1d6" class="">3.8b) Once the installation has been completed you will see a checkbox that says “Launch Visual Studio Code”, uncheck that box and click finish.</p><hr id="1cbf9012-8323-806a-b136-e88702af1e96"/><h2 id="1c9f9012-8323-80bb-9ad8-d6c16b9acd0a" class="">4) Installing your Python Packages</h2><p id="1c9f9012-8323-8078-9b80-d72000309a07" class="">Now that you have Python and an IDE, you will now use Python to install additional <mark class="highlight-yellow">packages</mark>, or <mark class="highlight-yellow">libraries</mark> of code and tools. These will enable us to make graphical representations of data and compute mathematical expressions. To install these packages, you will need to access your computer’s <mark class="highlight-yellow">terminal</mark>. A terminal is the most direct method for you to access your computer’s code. Accessing the terminal will depend on your OS, and below you will find separate steps that show how to access it. Once opened, you will follow specific instructions on what to type into the terminal to download the necessary python packages. <em><mark class="highlight-blue">Be careful to follow these steps carefully and exactly or your code will not run.</mark></em><mark class="highlight-red"> </mark><mark class="highlight-default">Code will now be separated into a distinct </mark><mark class="highlight-default"><code>box</code></mark><mark class="highlight-default"> to more easily differentiate what you should type in. If you get confused, you can copy and paste the code into your terminal as well. </mark></p><h3 id="1c9f9012-8323-807b-bbda-f457d987b34c" class="">Steps for <em>macOS</em></h3><p id="1c9f9012-8323-8070-ab6f-ef26a8509051" class="">4.1a) Access your spotlight search feature by hitting command and space.</p><p id="1c9f9012-8323-80fe-baaf-d7ee3725ac34" class="">4.2a) Type in the word “terminal” and hit enter. A small box should open. This is your terminal.</p><p id="1c9f9012-8323-803b-9eb0-d3408a402789" class="">4.3a) Type what is in the box below into your terminal and then click enter. Where the code says <mark class="highlight-default"><code>nameofyourchoice</code></mark> you may insert whatever name you would like. Ensure that there are no spaces between any of the parts of your name. Upon clicking enter you will see some new lines of response from the computer.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c9f9012-8323-8051-b88a-d6c9c6445095" class="code"><code class="language-Bash">python3 -m venv nameofyourchoice</code></pre><p id="1cbf9012-8323-80b9-9ae6-e3d811e31316" class="">4.4a) Now we will activate the virtual environment that we have created by executing the following command, remember to replace <mark class="highlight-default"><code>nameofyourchoice</code></mark> with the name you chose. Then click enter.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cbf9012-8323-80e0-ab82-fc91862149a0" class="code"><code class="language-Bash">source ./nameofyourchoice/bin/activate</code></pre><p id="1c9f9012-8323-80b5-ac38-e7c40dc230b4" class="">4.5a) Now you will tell the computer to download certain packages. Copy the following into the terminal and press enter.  </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c9f9012-8323-80db-9f02-c0558f1659db" class="code"><code class="language-Bash">pip install matplotlib numpy pandas</code></pre><figure id="1cef9012-8323-8021-8f70-c2c6e0b90d23" class="image"><a href="Screenshot_2025-04-07_at_12.24.23_PM.png"><img style="width:576px" src="Screenshot_2025-04-07_at_12.24.23_PM.png"/></a></figure><h3 id="1c9f9012-8323-80dc-87cd-f9ab30cac01d" class="">Steps for <em>Windows</em></h3><p id="1c9f9012-8323-80d0-89ba-dfc98333850c" class="">4.1b) Access your Windows Search feature by hitting the windows button.</p><p id="1c9f9012-8323-80ef-9a2a-c5763a8bcbc8" class="">4.2b) Search for “cmd” and chose the “Command Prompt” program.</p><p id="1c9f9012-8323-8067-bb0e-d2f5d47ea08b" class="">4.3b)  Type what is in the box below into your Command Prompt. Where the code says <mark class="highlight-default"><code>nameofyourchoice</code></mark> you may insert whatever name you would like. Ensure that there are no spaces between any of the parts of your name. Upon clicking enter you will see some new lines of response from the computer.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1caf9012-8323-80a4-ab40-da87a7405e42" class="code"><code class="language-Bash">python -m venv nameofyourchoice</code></pre><p id="1c9f9012-8323-8014-8c17-c556a892fd5c" class="">4.4b) You will now need to activate your virtual environment by typing the following in your Command Prompt, replace <mark class="highlight-default"><code>nameofyourchoice</code></mark> with the name of the environment that you chose earlier and click enter.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c9f9012-8323-807a-8d84-dca9af5ca983" class="code"><code class="language-Bash">./nameofyourchoice/bin/activate</code></pre><p id="1c9f9012-8323-80b7-924d-ed08a3521f5c" class="">4.5b) Now you will tell the computer to download certain packages. Copy the following into the terminal and press enter. </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cbf9012-8323-80bf-beab-e3bdddb4cc6b" class="code"><code class="language-Bash">pip install matplotlib numpy pandas</code></pre><figure id="1c8f9012-8323-8002-8e5c-d97c71a94f96" class="image"><a href="image.png"><img style="width:528px" src="image.png"/></a></figure><hr id="1cbf9012-8323-808a-a89f-fb4e7553b6f7"/><h2 id="1c9f9012-8323-808f-ba03-c47c11cf7a1b" class="">5) Gathering your Physics Data</h2><p id="1cbf9012-8323-80e7-af61-d18c55880440" class="">We now need to gather the data that will be graphed. This data must be saved as a <mark class="highlight-yellow">csv</mark> (comma separated values) file. A csv is a basic way to store tabular information that can then be easily read by a computer. Your code in Python will be interpreting data in a csv file to then turn into a graphical representation of the data. Here you can insert your own unique data if you wish or use the data in the example photo. The power of python is that you can use this same code to graph any change of data you might have in the future. The steps will remain the same of inputting your data into an excel and saving it as a csv. </p><p id="1cbf9012-8323-80fa-b4f5-c0f2a7a0d77f" class="">5.1) Open Microsoft excel and create a new sheet.</p><p id="1cbf9012-8323-80c4-bb3e-de3db0aafa10" class="">5.2) Write down “time” in cell A1 and “position” in cell B1.</p><p id="1cef9012-8323-80ae-8fff-e4281cc4857a" class="">5.3) You may now insert your time and position values in the columns under each title. You can include as many data points as you would like. When you finish, it should look like the example image.</p><figure id="1cef9012-8323-803b-8525-d53d47857d60" class="image"><a href="Screenshot_2025-04-07_at_12.13.45_PM.png"><img style="width:528px" src="Screenshot_2025-04-07_at_12.13.45_PM.png"/></a></figure><p id="1cbf9012-8323-8061-b8ee-cda1045a86a9" class="">5.4) After you have finished entering the data, you need to save the file in a csv format. The steps differ slightly depending on your OS. <div class="indented"><p id="1cbf9012-8323-8091-902e-dd05b267d62c" class="">5.4a) On Mac:</p><p id="1cef9012-8323-80da-8fbb-ea84da6f303d" class="">Press the <strong>file</strong> button in the top right of your monitor and click <strong>Save As…</strong> A box will appear in which you can name your csv file. Next to <strong>File Format</strong> you can flick the dropdown menu and select <strong>Comma Separated Valued (.csv). </strong>You will then click the save button in the bottom right of the box. </p><p id="1cbf9012-8323-8079-b3a1-d3d1d3a47ae8" class="">5.4b) On Windows:</p><p id="1cbf9012-8323-80b3-8937-e393fc0f306f" class="">Press <strong>Ctrl+S</strong> to open the &quot;Save this file&quot; window. Enter a file name in the designated field. Then, in the same window, locate the option on the far right that displays <strong>&quot;.xlsx&quot;</strong>; click it and select <strong>&quot;CSV (comma delimited) (*.csv)&quot;</strong> as the file format.</p></div></p><hr id="1cbf9012-8323-80fd-a993-e295801082b9"/><h2 id="1c9f9012-8323-802e-88a8-db8adcbe2dab" class="">6) Writing your Code</h2><p id="1c9f9012-8323-8007-93db-c184b28506a3" class="">Congrats! You’re now ready to insert the actual code to plot your data. You will be entering this into your IDE and at the end we will show you how to run the code. You may choose to go step by step and type in each line of code to learn more about what each section entails or you can find at the bottom the entire code and copy and paste it into your IDE to run the code.</p><p id="1cbf9012-8323-8004-8840-d776983ef16b" class="">
+</p><p id="1c9f9012-8323-80b9-a8b9-ca030e61448a" class="">6.1) Open your IDE and return to the Python file you made previously.</p><p id="1cff9012-8323-80d1-a4b2-c4362572678c" class="">add environment to ide  </p><p id="1c9f9012-8323-8047-a736-da2c8444fb02" class="">6.2) Import the necessary libraries that we previously installed in step 4 (matplotlib, numpy, pandas). Copy the following code to do so. </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c9f9012-8323-808c-8135-c6e607181443" class="code"><code class="language-Python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd</code></pre><p id="1c9f9012-8323-80e5-9c0d-cf95bb0b630d" class="">6.3) Now you will input your dataset and define which set is your dependent and independent variable. Copy the following code to do so. Remember to replace filename.csv with the name of the csv file you created previously and make sure the csv file is in the same directory as your python file, if not copy it to where your python file is stored.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c9f9012-8323-8043-bf22-c40c0694e6d2" class="code"><code class="language-Python">file_name = &quot;filename.csv&quot;
+
+dataset = pd.read_csv(file_name)
+
+dependent_variable_O_column_name = &quot;Position (m)&quot;
+position = dataset[dependent_variable_O_column_name]
+
+independent_variable_column_name= &quot;Time (s)&quot;
+
+t = dataset[independent_variable_column_name]</code></pre><p id="1c9f9012-8323-8051-b40d-e356f5d76c3e" class="">6.4) Next you will have the computer calculate the derivative of the position date with respect to time to calculate the velocity. </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c9f9012-8323-806a-9a72-c215fa1925a2" class="code"><code class="language-Python"># Acceleration using numerical differentiation
+acceleration = np.gradient(velocity, t)
+
+dependent_variable_2_column_name = &quot;acceleration&quot;
+dataset[dependent_variable_2_column_name] = acceleration
+
+
+# Option to save the data to the same file with updated equation
+dataset.to_csv(file_name, index=False)</code></pre><p id="1c9f9012-8323-8043-b3ff-c7ab76a8d994" class="">6.5) Following this you will do something similar to take the derivative of the velocity with respect to time to calculate the acceleration. </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c9f9012-8323-80c2-8ff4-da1ef4928b74" class="code"><code class="language-Python"># Acceleration using numerical differentiation
+acceleration = np.gradient(velocity, t)
+
+dependent_variable_2_column_name = &quot;acceleration&quot;
+position[dependent_variable_2_column_name] = acceleration
+
+
+# Option to save the data to the same file with updated equation
+pd.to_csv(file_name, index=False)</code></pre><p id="1c9f9012-8323-8000-8353-dd99a5e9f0da" class="">6.6) Next you will create the code that defines the length and look of each of your plots, starting with position over time. This code will label you axis and choose the color of your graph.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cbf9012-8323-8037-9b06-d634fec35677" class="code"><code class="language-Python">fig, axes = plt.subplots(3, 1, figsize=(8, 10), sharex=True)
+
+axes[0].plot(t, position, label=&quot;Position (m)&quot;, color=&#x27;b&#x27;)
+axes[0].set_ylabel(&quot;Position (m)&quot;) # Changed yset_ylabel to set_ylabel
+axes[0].legend()
+axes[0].grid()</code></pre><p id="1cbf9012-8323-80c8-bdb7-d01ee23e83b4" class="">6.7) You will do something similar but now for velocity over time. </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cbf9012-8323-8017-bd61-c09e8bc3748e" class="code"><code class="language-Python">axes[1].plot(t, velocity, label=&quot;Velocity (m/s)&quot;, color=&#x27;g&#x27;)
+axes[1].set_ylabel(&quot;Velocity (m/s)&quot;)
+axes[1].legend()
+axes[1].grid()</code></pre><p id="1cbf9012-8323-801c-81e8-ce55b31ce769" class="">6.8) And now the same for acceleration as well as the command to tell the computer to plot the graphs. </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cbf9012-8323-801d-bbb1-d87a3a51a1fd" class="code"><code class="language-Python">axes[2].plot(t, acceleration, label=&quot;Acceleration (m/s²)&quot;, color=&#x27;r&#x27;)
+axes[2].set_xlabel(&quot;Time (s)&quot;)
+axes[2].set_ylabel(&quot;Acceleration (m/s²)&quot;)
+axes[2].legend()
+axes[2].grid()
+
+plt.show()
+
+print(f&quot;Data saved to {file_name}&quot;)</code></pre><p id="1cbf9012-8323-8048-9d67-ef70148783d3" class="">Congratulations! 🥳 Your graphs should now be created by your computer through the code you gave it!</p><hr id="1cbf9012-8323-80da-90b9-c38e7466036d"/><h2 id="1cbf9012-8323-8050-bf72-c25db6187658" class="">Full code for plotting all three graphs:</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c7f9012-8323-804b-a019-eca4a1789257" class="code"><code class="language-Python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+file_name = &quot;filename.csv&quot;
+dataset = pd.read_csv(file_name)
+
+dependent_variable_O_column_name = &quot;position&quot;
+position = dataset[dependent_variable_O_column_name]
+
+independent_variable_column_name= &quot;time&quot;
+
+t = dataset[independent_variable_column_name]
+
+# Compute velocity using numerical differentiation
+velocity = np.gradient(position, t)
+
+# Compute acceleration using numerical differentiation
+acceleration = np.gradient(velocity, t)
+
+# Save data to a CSV file
+data = pd.DataFrame({&#x27;Time (s)&#x27;: t, &#x27;Position (m)&#x27;: position, 
+                     &#x27;Velocity (m/s)&#x27;: velocity, &#x27;Acceleration (m/s²)&#x27;: acceleration})
+data.to_csv(&quot;motion_data.csv&quot;, index=False)
+
+# Plot results
+fig, axes = plt.subplots(3, 1, figsize=(8, 10), sharex=True)
+
+axes[0].plot(t, position, label=&quot;Position (m)&quot;, color=&#x27;b&#x27;)
+axes[0].set_ylabel(&quot;Position (m)&quot;)
+axes[0].legend()
+axes[0].grid()
+
+axes[1].plot(t, velocity, label=&quot;Velocity (m/s)&quot;, color=&#x27;g&#x27;)
+axes[1].set_ylabel(&quot;Velocity (m/s)&quot;)
+axes[1].legend()
+axes[1].grid()
+
+axes[2].plot(t, acceleration, label=&quot;Acceleration (m/s²)&quot;, color=&#x27;r&#x27;)
+axes[2].set_xlabel(&quot;Time (s)&quot;)
+axes[2].set_ylabel(&quot;Acceleration (m/s²)&quot;)
+axes[2].legend()
+axes[2].grid()
+
+plt.show()
+
+print(&quot;Data saved to &#x27;motion_data.csv&#x27;&quot;)</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
